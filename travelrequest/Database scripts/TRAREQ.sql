@@ -14,6 +14,8 @@ CREATE TABLE [dbo].[pbs_HR_TRAVEL_REQ_{XXX}](
 	[ARR_DATE] [int] NOT NULL,
 	[ARR_TIME] [int] NOT NULL,
 	[DESTINATION] [nvarchar](25) NOT NULL,
+	[CITY] [nvarchar](25) NOT NULL,
+	[COUNTRY] [varchar](15) NOT NULL,
 	[RET_DATE] [int] NOT NULL,
 	[TRANSPORTATION] [nvarchar](25) NOT NULL,
 	[ACCOMODATION] [nvarchar](25) NOT NULL,
@@ -34,10 +36,11 @@ CREATE TABLE [dbo].[pbs_HR_TRAVEL_REQ_{XXX}](
 )
 ) ON [PRIMARY]
 GO
+
+
  
 
-
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[pbs_TRAR_{XXX}_InsertUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+ IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[pbs_TRAR_{XXX}_InsertUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
 BEGIN
 EXEC dbo.sp_executesql @statement = N'
 CREATE PROCEDURE [pbs_TRAR_{XXX}_InsertUpdate]
@@ -53,6 +56,8 @@ CREATE PROCEDURE [pbs_TRAR_{XXX}_InsertUpdate]
 @ARR_DATE int,
 @ARR_TIME int,
 @DESTINATION System.String(25),
+@CITY System.String(25),
+@COUNTRY System.String(15),
 @RET_DATE int,
 @TRANSPORTATION System.String(25),
 @ACCOMODATION System.String(25),
@@ -85,6 +90,8 @@ BEGIN
 [ARR_DATE] = @ARR_DATE,
 [ARR_TIME] = @ARR_TIME,
 [DESTINATION] = @DESTINATION,
+[CITY] = @CITY,
+[COUNTRY] = @COUNTRY,
 [RET_DATE] = @RET_DATE,
 [TRANSPORTATION] = @TRANSPORTATION,
 [ACCOMODATION] = @ACCOMODATION,
@@ -116,6 +123,8 @@ BEGIN
 [ARR_DATE],
 [ARR_TIME],
 [DESTINATION],
+[CITY],
+[COUNTRY],
 [RET_DATE],
 [TRANSPORTATION],
 [ACCOMODATION],
@@ -143,6 +152,8 @@ BEGIN
 @ARR_DATE,
 @ARR_TIME,
 @DESTINATION,
+@CITY,
+@COUNTRY,
 @RET_DATE,
 @TRANSPORTATION,
 @ACCOMODATION,
@@ -160,3 +171,166 @@ BEGIN
 	)
 END' 
 END
+ GO
+ IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[pbs_TRAR_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        EXEC dbo.sp_executesql @statement = N'
+        CREATE PROCEDURE [pbs_TRAR_{XXX}_Insert]
+        	@REQUEST_NO System.String(15),
+@REQUEST_DATE int,
+@PERIOD int,
+@PROPOSED_BY System.String(15),
+@PURPOSE System.String(200),
+@STATUS System.String(15),
+@DEP_DATE int,
+@DEP_TIME int,
+@DEPARTURE System.String(25),
+@ARR_DATE int,
+@ARR_TIME int,
+@DESTINATION System.String(25),
+@CITY System.String(25),
+@COUNTRY System.String(15),
+@RET_DATE int,
+@TRANSPORTATION System.String(25),
+@ACCOMODATION System.String(25),
+@BUDGET_CODE System.String(15),
+@PROJECT_CODE System.String(15),
+@CUSTOMER_CODE System.String(15),
+@EXT_DESC0 System.String(100),
+@EXT_DESC1 System.String(100),
+@EXT_DESC2 System.String(100),
+@EXT_DESC3 System.String(100),
+@NOTES System.String(250),
+@UPDATED_BY System.String(15),
+@UPDATED int,
+@TIMESTAMP System.Byte[](8)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [pbs_HR_TRAVEL_REQ_{XXX}] ([REQUEST_NO],
+[REQUEST_DATE],
+[PERIOD],
+[PROPOSED_BY],
+[PURPOSE],
+[STATUS],
+[DEP_DATE],
+[DEP_TIME],
+[DEPARTURE],
+[ARR_DATE],
+[ARR_TIME],
+[DESTINATION],
+[CITY],
+[COUNTRY],
+[RET_DATE],
+[TRANSPORTATION],
+[ACCOMODATION],
+[BUDGET_CODE],
+[PROJECT_CODE],
+[CUSTOMER_CODE],
+[EXT_DESC0],
+[EXT_DESC1],
+[EXT_DESC2],
+[EXT_DESC3],
+[NOTES],
+[UPDATED_BY],
+[UPDATED],
+[TIMESTAMP]) 
+        VALUES (@REQUEST_NO,
+@REQUEST_DATE,
+@PERIOD,
+@PROPOSED_BY,
+@PURPOSE,
+@STATUS,
+@DEP_DATE,
+@DEP_TIME,
+@DEPARTURE,
+@ARR_DATE,
+@ARR_TIME,
+@DESTINATION,
+@CITY,
+@COUNTRY,
+@RET_DATE,
+@TRANSPORTATION,
+@ACCOMODATION,
+@BUDGET_CODE,
+@PROJECT_CODE,
+@CUSTOMER_CODE,
+@EXT_DESC0,
+@EXT_DESC1,
+@EXT_DESC2,
+@EXT_DESC3,
+@NOTES,
+@UPDATED_BY,
+@UPDATED,
+@TIMESTAMP)
+
+        
+                          
+        ' 
+        END
+ GO
+ IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[pbs_TRAR_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        EXEC dbo.sp_executesql @statement = N'
+        CREATE PROCEDURE [pbs_TRAR_{XXX}_Update]
+        	@REQUEST_NO System.String(15),
+@REQUEST_DATE int,
+@PERIOD int,
+@PROPOSED_BY System.String(15),
+@PURPOSE System.String(200),
+@STATUS System.String(15),
+@DEP_DATE int,
+@DEP_TIME int,
+@DEPARTURE System.String(25),
+@ARR_DATE int,
+@ARR_TIME int,
+@DESTINATION System.String(25),
+@CITY System.String(25),
+@COUNTRY System.String(15),
+@RET_DATE int,
+@TRANSPORTATION System.String(25),
+@ACCOMODATION System.String(25),
+@BUDGET_CODE System.String(15),
+@PROJECT_CODE System.String(15),
+@CUSTOMER_CODE System.String(15),
+@EXT_DESC0 System.String(100),
+@EXT_DESC1 System.String(100),
+@EXT_DESC2 System.String(100),
+@EXT_DESC3 System.String(100),
+@NOTES System.String(250),
+@UPDATED_BY System.String(15),
+@UPDATED int,
+@TIMESTAMP System.Byte[](8)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [pbs_HR_TRAVEL_REQ_{XXX}] SET [REQUEST_DATE] = @REQUEST_DATE,
+[PERIOD] = @PERIOD,
+[PROPOSED_BY] = @PROPOSED_BY,
+[PURPOSE] = @PURPOSE,
+[STATUS] = @STATUS,
+[DEP_DATE] = @DEP_DATE,
+[DEP_TIME] = @DEP_TIME,
+[DEPARTURE] = @DEPARTURE,
+[ARR_DATE] = @ARR_DATE,
+[ARR_TIME] = @ARR_TIME,
+[DESTINATION] = @DESTINATION,
+[CITY] = @CITY,
+[COUNTRY] = @COUNTRY,
+[RET_DATE] = @RET_DATE,
+[TRANSPORTATION] = @TRANSPORTATION,
+[ACCOMODATION] = @ACCOMODATION,
+[BUDGET_CODE] = @BUDGET_CODE,
+[PROJECT_CODE] = @PROJECT_CODE,
+[CUSTOMER_CODE] = @CUSTOMER_CODE,
+[EXT_DESC0] = @EXT_DESC0,
+[EXT_DESC1] = @EXT_DESC1,
+[EXT_DESC2] = @EXT_DESC2,
+[EXT_DESC3] = @EXT_DESC3,
+[NOTES] = @NOTES,
+[UPDATED_BY] = @UPDATED_BY,
+[UPDATED] = @UPDATED,
+[TIMESTAMP] = @TIMESTAMP
+        WHERE [REQUEST_NO] = @REQUEST_NO
+        ' 
+        END
