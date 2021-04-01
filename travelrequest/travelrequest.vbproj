@@ -65,12 +65,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.vb" />
-    <Compile Include="Database scripts\travelrequest.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>travelrequest.xsd</DependentUpon>
-    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -97,16 +91,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Database scripts\travelrequest.xsc">
-      <DependentUpon>travelrequest.xsd</DependentUpon>
+    <None Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
-    <None Include="Database scripts\travelrequest.xsd">
+    <None Include="DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>travelrequest.Designer.vb</LastGenOutput>
     </None>
-    <None Include="Database scripts\travelrequest.xss">
-      <DependentUpon>travelrequest.xsd</DependentUpon>
+    <None Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -119,7 +112,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database scripts\TRAR.xml" />
+    <Content Include="Database scripts\TRAREQ_M.sql" />
+    <Content Include="Database scripts\TRAREQ_H.sql" />
+    <Content Include="Database scripts\TRAREQ_T.sql" />
+    <Content Include="Database scripts\TRAREQ_D.sql" />
+    <Content Include="Database scripts\TRAREQ.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -1,0 +1,157 @@
+﻿--class id : pbs.BO.HR.TRART
+--class name : Travel Request Transport
+
+CREATE TABLE [dbo].[pbs_HR_TRAVEL_REQ_TRANSPORT_{XXX}](
+	[REQUEST_NO] [varchar](15) NOT NULL,
+	[LINE_NO] [varchar](5) NOT NULL,
+	[DEPARTURE] [nvarchar](25) NOT NULL,
+	[DEP_DATE] [int] NOT NULL,
+	[DEP_TIME] [int] NOT NULL,
+	[DESTINATION] [nvarchar](25) NOT NULL,
+	[ARR_DATE] [int] NOT NULL,
+	[ARR_TIME] [int] NOT NULL,
+	[TRANSPORT_TYPE] [nvarchar](25) NOT NULL,
+	[TICKET_CLASS] [nvarchar](25) NOT NULL,
+	[TRANSPORT] [nvarchar](25) NOT NULL,
+	[QTY] [numeric](18, 2) NOT NULL,
+	[TICKET_PRICE] [numeric](18, 2) NOT NULL,
+	[TAX] [numeric](18, 2) NOT NULL,
+ CONSTRAINT [PK_pbs_HR_TRAVEL_REQ_TRANSPORT_{XXX}_1] PRIMARY KEY CLUSTERED 
+(
+	[REQUEST_NO] ASC,
+	[LINE_NO] ASC
+)
+) ON [PRIMARY]
+GO
+
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[pbs_TRART_{XXX}_InsertUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+BEGIN
+EXEC dbo.sp_executesql @statement = N'
+CREATE PROCEDURE [pbs_TRART_{XXX}_InsertUpdate]
+	@REQUEST_NO System.String(15),
+@LINE_NO System.String(5),
+@DEPARTURE System.String(25),
+@DEP_DATE int,
+@DEP_TIME int,
+@DESTINATION System.String(25),
+@ARR_DATE int,
+@ARR_TIME int,
+@TRANSPORT_TYPE System.String(25),
+@TICKET_CLASS System.String(25),
+@TRANSPORT System.String(25),
+@QTY System.Decimal(18, 2),
+@TICKET_PRICE System.Decimal(18, 2),
+@TAX System.Decimal(18, 2)
+AS
+
+SET NOCOUNT ON
+
+IF EXISTS(SELECT REQUEST_NO,LINE_NO FROM [pbs_HR_TRAVEL_REQ_TRANSPORT_{XXX}] WHERE [REQUEST_NO] = @REQUEST_NO AND [LINE_NO] = @LINE_NO)
+BEGIN
+	UPDATE [pbs_HR_TRAVEL_REQ_TRANSPORT_{XXX}] SET
+		[DEPARTURE] = @DEPARTURE,
+[DEP_DATE] = @DEP_DATE,
+[DEP_TIME] = @DEP_TIME,
+[DESTINATION] = @DESTINATION,
+[ARR_DATE] = @ARR_DATE,
+[ARR_TIME] = @ARR_TIME,
+[TRANSPORT_TYPE] = @TRANSPORT_TYPE,
+[TICKET_CLASS] = @TICKET_CLASS,
+[TRANSPORT] = @TRANSPORT,
+[QTY] = @QTY,
+[TICKET_PRICE] = @TICKET_PRICE,
+[TAX] = @TAX
+	WHERE [REQUEST_NO] = @REQUEST_NO AND [LINE_NO] = @LINE_NO
+END
+ELSE
+BEGIN
+	INSERT INTO [pbs_HR_TRAVEL_REQ_TRANSPORT_{XXX}] (
+		[REQUEST_NO],
+[LINE_NO],
+[DEPARTURE],
+[DEP_DATE],
+[DEP_TIME],
+[DESTINATION],
+[ARR_DATE],
+[ARR_TIME],
+[TRANSPORT_TYPE],
+[TICKET_CLASS],
+[TRANSPORT],
+[QTY],
+[TICKET_PRICE],
+[TAX]
+	) VALUES (
+		@REQUEST_NO,
+@LINE_NO,
+@DEPARTURE,
+@DEP_DATE,
+@DEP_TIME,
+@DESTINATION,
+@ARR_DATE,
+@ARR_TIME,
+@TRANSPORT_TYPE,
+@TICKET_CLASS,
+@TRANSPORT,
+@QTY,
+@TICKET_PRICE,
+@TAX
+	)
+END' 
+END
+ GO
+ IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[pbs_TRART_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        EXEC dbo.sp_executesql @statement = N'
+        CREATE PROCEDURE [pbs_TRART_{XXX}_Insert]
+        	@REQUEST_NO System.String(15),
+@LINE_NO System.String(5),
+@DEPARTURE System.String(25),
+@DEP_DATE int,
+@DEP_TIME int,
+@DESTINATION System.String(25),
+@ARR_DATE int,
+@ARR_TIME int,
+@TRANSPORT_TYPE System.String(25),
+@TICKET_CLASS System.String(25),
+@TRANSPORT System.String(25),
+@QTY System.Decimal(18, 2),
+@TICKET_PRICE System.Decimal(18, 2),
+@TAX System.Decimal(18, 2)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [pbs_HR_TRAVEL_REQ_TRANSPORT_{XXX}] ([REQUEST_NO],
+[LINE_NO],
+[DEPARTURE],
+[DEP_DATE],
+[DEP_TIME],
+[DESTINATION],
+[ARR_DATE],
+[ARR_TIME],
+[TRANSPORT_TYPE],
+[TICKET_CLASS],
+[TRANSPORT],
+[QTY],
+[TICKET_PRICE],
+[TAX]) 
+        VALUES (@REQUEST_NO,
+@LINE_NO,
+@DEPARTURE,
+@DEP_DATE,
+@DEP_TIME,
+@DESTINATION,
+@ARR_DATE,
+@ARR_TIME,
+@TRANSPORT_TYPE,
+@TICKET_CLASS,
+@TRANSPORT,
+@QTY,
+@TICKET_PRICE,
+@TAX)
+
+        
+                          
+        ' 
+        END
+ GO
+ 
